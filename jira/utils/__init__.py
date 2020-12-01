@@ -36,11 +36,14 @@ class CaseInsensitiveDict(dict):
     def __init__(self, *args, **kw):
         super(CaseInsensitiveDict, self).__init__(*args, **kw)
 
-        self.itemlist = {}
-        for key, value in super(CaseInsensitiveDict, self).copy().items():
+        upper_keys_list = []
+        for key in super(CaseInsensitiveDict, self).keys():
             if key != key.lower():
-                self[key.lower()] = value
-                self.pop(key, None)
+                upper_keys_list.append(key)
+
+        for upper_key in upper_keys_list:
+            self[upper_key.lower()] = self[upper_key]
+            self.pop(upper_key, None)
 
         # self.itemlist[key.lower()] = value
 
